@@ -25,19 +25,15 @@ public class Car {
         Integer place;
 
         try {
-            System.out.println("Машина с id " + id + " прибыла на стоянку со временем ожидания в очереди " + timeout);
-
+            log.info("Машина с id " + id + " прибыла на стоянку со временем ожидания в очереди " + timeout);
 
             //place = queue.take();
-
             place = queue.poll(timeout, TimeUnit.MILLISECONDS);
             if (place == null) {
-
-                System.out.println("Машина с id " + id + " устала ждать и уезжает");
+                log.info("Машина с id " + id + " устала ждать и уезжает");
                 Thread.currentThread().interrupt();
                 //Thread.currentThread().stop();
             }
-
         } catch (InterruptedException e) {
             log.error(e.toString());
             return;
@@ -45,7 +41,7 @@ public class Car {
 
         if (!Thread.currentThread().isInterrupted()) {
             long parkingTimeout = (new Random().nextInt(10) + 1) * 100L;
-            System.out.println("Машина с id " + id + " занимает " + parkingTimeout + " миллисекунд на месте " + place);
+            log.info("Машина с id " + id + " занимает " + parkingTimeout + " миллисекунд на месте " + place);
 
             ParkingPlace parkingPlace = new ParkingPlace(parkingTimeout, id);
             try {
@@ -58,7 +54,7 @@ public class Car {
             } catch (Exception e) {
                 log.error(e.toString());
             } finally {
-                System.out.println("Машина с id " + id + " покидает парковочное место " + place);
+                log.info("Машина с id " + id + " покидает парковочное место " + place);
                 places.set(place, null);
                 queue.add(place);
             }
