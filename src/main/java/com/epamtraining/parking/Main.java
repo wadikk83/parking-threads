@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static final int NUMBER_OF_PLACES = 5;
     public static final int NUMBERS_OF_CAR = 12;
+    public static int leavingCars = 0;
 
 
     public static void main(String[] args) throws Exception {
@@ -34,6 +35,8 @@ public class Main {
         executorService.shutdown();
         executorService.awaitTermination(5, TimeUnit.SECONDS);
 
+
+        System.out.println(leavingCars);
         log.info("Application Parking  is finished at " +
                 new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
         log.info("==========================================================================");

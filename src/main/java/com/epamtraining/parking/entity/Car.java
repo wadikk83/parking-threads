@@ -1,5 +1,6 @@
 package com.epamtraining.parking.entity;
 
+import com.epamtraining.parking.Main;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Random;
@@ -31,6 +32,7 @@ public class Car {
             place = queue.poll(timeout, TimeUnit.MILLISECONDS);
             if (place == null) {
                 log.info("Машина с id " + id + " устала ждать и уезжает");
+                Main.leavingCars++; //for test method
                 Thread.currentThread().interrupt();
                 //Thread.currentThread().stop();
             }
